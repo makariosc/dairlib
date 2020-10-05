@@ -50,7 +50,7 @@ group "3.cassie-robot" {
         host = "dair-cassie";
     }
     cmd "4.0 osc-walking-real-robot (wo radio)" {
-        exec = "/home/dair/workspace/dairlib/bazel-bin/examples/Cassie/run_osc_walking_controller --channel_x=CASSIE_STATE_DISPATCHER --channel_u=OSC_WALKING --use_radio=false";
+        exec = "/home/dair/workspace/dairlib/bazel-bin/examples/Cassie/run_osc_walking_controller --channel_x=CASSIE_STATE_DISPATCHER --channel_u=OSC_WALKING --use_radio=false --is_two_phase=false --use_fixed_spring_model=0";
         host = "dair-cassie";
     }
     cmd "4.osc-walking-real-robot (w radio)" {
