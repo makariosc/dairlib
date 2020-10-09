@@ -211,7 +211,7 @@ int DoMain(int argc, char* argv[]) {
   double w_contact_relax = gains.w_soft_constraint;
   osc->SetWeightOfSoftContactConstraint(w_contact_relax);
   // Friction coefficient
-  double mu = 0.8;
+  double mu = 0.4;
   osc->SetContactFriction(mu);
   // Add contact points (The position doesn't matter. It's not used in OSC)
   auto left_toe_evaluator = multibody::WorldPointEvaluator(
@@ -233,6 +233,10 @@ int DoMain(int argc, char* argv[]) {
   // Cost
   int n_v = plant_wo_springs.num_velocities();
   MatrixXd Q_accel = gains.w_accel * MatrixXd::Identity(n_v, n_v);
+  Q_accel(6, 6) = 1;
+  Q_accel(7, 7) = 1;
+  Q_accel(8, 8) = 50;
+  Q_accel(9, 9) = 50;
   osc->SetAccelerationCostForAllJoints(Q_accel);
   // Center of mass tracking
   // Weighting x-y higher than z, as they are more important to balancing
