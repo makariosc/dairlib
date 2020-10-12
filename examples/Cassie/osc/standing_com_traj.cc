@@ -79,6 +79,8 @@ void StandingComTraj::CalcDesiredTraj(
   Vector3d feet_center_pos = contact_pos_sum / 4;
   Vector3d desired_com_pos(feet_center_pos(0), feet_center_pos(1),
                            feet_center_pos(2) + target_height);
+  
+  desired_com_pos(1) += 0.04;
 
   // Assign traj
   PiecewisePolynomial<double>* pp_traj =

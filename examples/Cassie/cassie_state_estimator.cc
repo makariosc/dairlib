@@ -153,9 +153,9 @@ CassieStateEstimator::CassieStateEstimator(
     // initialize ekf input noise
     cov_w_ = 0.000289 * Eigen::MatrixXd::Identity(16, 16);
     inekf::NoiseParams noise_params;
-    noise_params.setGyroscopeNoise(0.002);
+    noise_params.setGyroscopeNoise(0.01);//0.002);
     noise_params.setAccelerometerNoise(0.04);
-    noise_params.setGyroscopeBiasNoise(0.001);
+    noise_params.setGyroscopeBiasNoise(0.01);//0.001);
     noise_params.setAccelerometerBiasNoise(0.001);
     noise_params.setContactNoise(0.05);
     // 2. estimated EKF state (imu frame)
@@ -1061,8 +1061,9 @@ EventStatus CassieStateEstimator::Update(
   imu_measurement << imu_angular_velocity[0], imu_angular_velocity[1],
       imu_angular_velocity[2], imu_linear_acceleration[0],
       imu_linear_acceleration[1], imu_linear_acceleration[2];
-  if (print_info_to_terminal_) {
-    // cout << "imu_measurement = " << imu_measurement.transpose() << endl;
+  //if (print_info_to_terminal_) {
+if ((*counter_for_testing_) % 5000 == 0) {  
+   cout << "imu_measurement = " << imu_measurement.transpose() << endl;
   }
 
   // Perform State Estimation (in several steps)
@@ -1168,6 +1169,11 @@ EventStatus CassieStateEstimator::Update(
   } else if (hardware_test_mode_ == 1) {
     left_contact = 0;
     right_contact = 0;
+  }
+
+  if ((*counter_for_testing_) % 5000 == 0) {
+    std::cout << "left_contact = " << left_contact << std::endl;
+    std::cout << "right_contact = " << right_contact << std::endl;
   }
 
   // Assign contacts
