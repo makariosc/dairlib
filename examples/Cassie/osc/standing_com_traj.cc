@@ -72,6 +72,8 @@ void StandingComTraj::CalcDesiredTraj(
       context, radio_port_);
   target_height = std::max(std::min(target_height, kMaxHeight), kMinHeight);
   target_height += kHeightScale_ * cassie_out->pelvis.radio.channel[0];
+  double x_offset = cassie_out->pelvis.radio.channel[4];
+  double y_offset = cassie_out->pelvis.radio.channel[5];
   VectorXd q = robot_output->GetPositions();
 
   multibody::SetPositionsIfNew<double>(plant_, q, context_);
@@ -86,7 +88,7 @@ void StandingComTraj::CalcDesiredTraj(
     contact_pos_sum += position;
   }
   Vector3d feet_center_pos = contact_pos_sum / 4;
-  Vector3d desired_com_pos(feet_center_pos(0), feet_center_pos(1),
+  Vector3d desired_com_pos(feet_center_pos(0) + x_offset, feet_center_pos(1) + y_offset,
                            feet_center_pos(2) + target_height);
   
   desired_com_pos(1) += 0.04;
