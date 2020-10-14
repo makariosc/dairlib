@@ -257,10 +257,6 @@ CassieStateEstimator::CassieStateEstimator(
         this->DeclareAbstractOutputPort(
                 &CassieStateEstimator::CopyEstimatedContactForces)
             .get_index();
-    gm_contact_for_fsm_output_port_ =
-        this->DeclareAbstractOutputPort(
-                &CassieStateEstimator::CopyEstimatedContactForcesForFsm)
-            .get_index();
   }
 }
 
