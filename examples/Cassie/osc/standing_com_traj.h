@@ -60,7 +60,6 @@ class StandingComTraj : public drake::systems::LeafSystem<double> {
       std::pair<const Eigen::Vector3d, const drake::multibody::Frame<double>&>>&
       feet_contact_points_;
 
-  double height_;
   static constexpr double kHeightScale_ = 0.2;
 };
 
